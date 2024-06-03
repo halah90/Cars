@@ -1,4 +1,7 @@
 
+using Application.Inerfaces;
+using Application.Services.CarsMake;
+
 namespace Cars
 {
     public class Program
@@ -13,8 +16,11 @@ namespace Cars
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<ICarMakeService, CarMakeService>();
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
