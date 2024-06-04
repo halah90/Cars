@@ -23,7 +23,7 @@ public class CarMakeService : ICarMakeService
             return null;
         }
 
-        var response = await  GetModelsForMakeIdYear(year, id.Value);
+        var response = await GetModelsForMakeIdYear(year, id.Value);
 
         if (response is null)
         {
@@ -40,16 +40,16 @@ public class CarMakeService : ICarMakeService
     {
         string jsonData = File.ReadAllText("CarsMake.json");
 
-        var obj = JsonSerializer.Deserialize<List<CarMake>>(jsonData);
+        var carMakers = JsonSerializer.Deserialize<List<CarMake>>(jsonData);
 
-        var makeId = obj?.Find(x => x.make_name.ToUpper() == makeName.ToUpper())?.make_id;
+        var makeId = carMakers?.Find(x => x.make_name.ToUpper() == makeName.ToUpper())?.make_id;
 
         return makeId;
     }
 
     private async Task<IntegrationResponse> GetModelsForMakeIdYear(int year, int makeId)
     {
-        string endPoint = string.Format("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/{0}/modelyear/{1}?format=json", makeId, year);// "https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/474/modelyear/2015?format=json";
+        string endPoint = string.Format("https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeIdYear/makeId/{0}/modelyear/{1}?format=json", makeId, year);
         myClient.DefaultRequestHeaders.Accept.Clear();
         myClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
